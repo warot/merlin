@@ -9,10 +9,20 @@
     android:label="Merlin demo">
 
     <activity
-      android:label="Demo Activity"
+      android:label="Merlin Demo"
       android:name=".presentation.DemoActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+
+    <activity
+      android:label="WizMerlin Demo"
+      android:name=".presentation.wizmerlin.WizMerlinDemoActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
