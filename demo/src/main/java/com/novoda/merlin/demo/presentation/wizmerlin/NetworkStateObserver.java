@@ -9,7 +9,7 @@ public class NetworkStateObserver implements Connectable, Disconnectable, Bindab
 
     private final Callbacks callbacks;
 
-    private boolean isConnected;
+    private NetworkStatus networkStatus;
 
     public NetworkStateObserver(Callbacks callbacks) {
         this.callbacks = callbacks;
@@ -17,6 +17,7 @@ public class NetworkStateObserver implements Connectable, Disconnectable, Bindab
 
     @Override
     public void onBind(NetworkStatus networkStatus) {
+        this.networkStatus = networkStatus;
         if (networkStatus.isAvailable()) {
             onConnect();
         } else {
@@ -26,18 +27,16 @@ public class NetworkStateObserver implements Connectable, Disconnectable, Bindab
 
     @Override
     public void onConnect() {
-        isConnected = true;
         callbacks.onConnectedToNetwork();
     }
 
     @Override
     public void onDisconnect() {
-        isConnected = false;
         callbacks.onDisconnectedFromNetwork();
     }
 
     public boolean connectedToNetwork() {
-        return isConnected;
+        return networkStatus.isAvailable();
     }
 
     public interface Callbacks {
