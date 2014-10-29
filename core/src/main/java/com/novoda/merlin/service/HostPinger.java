@@ -2,7 +2,6 @@ package com.novoda.merlin.service;
 
 import android.os.AsyncTask;
 
-import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinLog;
 import com.novoda.merlin.service.request.MerlinRequest;
 import com.novoda.merlin.service.request.RequestException;
@@ -42,14 +41,6 @@ class HostPinger {
     public void ping(String hostAddress) {
         PingTask pingTask = new PingTask(responseCodeFetcher, hostAddress, pingerCallback);
         pingTask.execute();
-    }
-
-    private String getHostAddress() {
-        if (hostAddress == null) {
-            MerlinLog.d("Host address has not been set, using Merlin default : " + Merlin.DEFAULT_ENDPOINT);
-            return Merlin.DEFAULT_ENDPOINT;
-        }
-        return hostAddress;
     }
 
     public void noNetworkToPing() {
