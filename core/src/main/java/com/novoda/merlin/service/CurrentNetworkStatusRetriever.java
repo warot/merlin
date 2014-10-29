@@ -1,5 +1,6 @@
 package com.novoda.merlin.service;
 
+import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
 import com.novoda.merlin.NetworkStatus;
 
@@ -15,7 +16,7 @@ class CurrentNetworkStatusRetriever {
 
     public void fetchWithPing() {
         if (merlinsBeard.isConnected()) {
-            hostPinger.ping();
+            hostPinger.ping(Merlin.DEFAULT_ENDPOINT);
         } else {
             hostPinger.noNetworkToPing();
         }
