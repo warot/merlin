@@ -17,7 +17,6 @@ public class MerlinServiceBinder {
     private final ListenerHolder listenerHolder;
 
     private Connection connection;
-    private String endpoint;
 
     public MerlinServiceBinder(Context context, ConnectListener connectListener, DisconnectListener disconnectListener,
                                BindListener bindListener) {
@@ -25,13 +24,9 @@ public class MerlinServiceBinder {
         this.context = context;
     }
 
-    public void setEndpoint(String hostname) {
-        this.endpoint = hostname;
-    }
-
     public void bindService() {
         if (connection == null) {
-            connection = new Connection(listenerHolder, endpoint);
+            connection = new Connection(listenerHolder);
         }
         Intent intent = new Intent(context, MerlinService.class);
         context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
@@ -51,13 +46,11 @@ public class MerlinServiceBinder {
     private static class Connection implements ServiceConnection {
 
         private final ListenerHolder listenerHolder;
-        private final String endpoint;
 
         private MerlinService merlinService;
 
-        Connection(ListenerHolder listenerHolder, String endpoint) {
+        Connection(ListenerHolder listenerHolder) {
             this.listenerHolder = listenerHolder;
-            this.endpoint = endpoint;
         }
 
         @Override
@@ -67,7 +60,6 @@ public class MerlinServiceBinder {
             merlinService.setConnectListener(listenerHolder.connectListener);
             merlinService.setDisconnectListener(listenerHolder.disconnectListener);
             merlinService.setBindStatusListener(listenerHolder.bindListener);
-            merlinService.setHostname(endpoint);
         }
 
         @Override

@@ -18,10 +18,6 @@ public class Merlin {
         this.registerer = registerer;
     }
 
-    public void setEndpoint(String endpoint) {
-        merlinServiceBinder.setEndpoint(endpoint);
-    }
-
     public void bind() {
         merlinServiceBinder.bindService();
     }

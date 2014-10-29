@@ -11,8 +11,6 @@ class HostPinger {
     private final PingerCallback pingerCallback;
     private final ResponseCodeFetcher responseCodeFetcher;
 
-    private String hostAddress;
-
     interface PingerCallback {
         void onSuccess();
 
@@ -32,10 +30,6 @@ class HostPinger {
         public int from(String endpoint) {
             return MerlinRequest.head(endpoint).getResponseCode();
         }
-    }
-
-    public void setEndpoint(String endpoint) {
-        this.hostAddress = endpoint;
     }
 
     public void ping(String hostAddress) {
