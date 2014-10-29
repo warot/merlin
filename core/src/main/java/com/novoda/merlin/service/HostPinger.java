@@ -2,8 +2,8 @@ package com.novoda.merlin.service;
 
 import android.os.AsyncTask;
 
-import com.novoda.merlin.MerlinLog;
 import com.novoda.merlin.Merlin;
+import com.novoda.merlin.MerlinLog;
 import com.novoda.merlin.service.request.MerlinRequest;
 import com.novoda.merlin.service.request.RequestException;
 
@@ -39,8 +39,8 @@ class HostPinger {
         this.hostAddress = endpoint;
     }
 
-    public void ping() {
-        PingTask pingTask = new PingTask(responseCodeFetcher, getHostAddress(), pingerCallback);
+    public void ping(String hostAddress) {
+        PingTask pingTask = new PingTask(responseCodeFetcher, hostAddress, pingerCallback);
         pingTask.execute();
     }
 
