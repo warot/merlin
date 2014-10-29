@@ -26,6 +26,8 @@ public class MerlinBuilder {
     private MerlinRegisterer<Disconnectable> disconnectableRegisterer;
     private MerlinRegisterer<Bindable> bindableRegisterer;
 
+    private String endpoint = Merlin.DEFAULT_ENDPOINT;
+
     MerlinBuilder() {
     }
 
@@ -59,6 +61,16 @@ public class MerlinBuilder {
     public MerlinBuilder withBindableCallbacks() {
         bindableRegisterer = new MerlinRegisterer<Bindable>();
         this.merlinOnBinder = new OnBinder(bindableRegisterer);
+        return this;
+    }
+
+    /**
+     * Sets the endpoint Merlin will ping against in order to determine connectivity
+     *
+     * @return MerlinBuilder.
+     */
+    public MerlinBuilder againstEndpoint(String endpoint) {
+        this.endpoint = endpoint;
         return this;
     }
 
