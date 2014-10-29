@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
 
+import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
 import com.novoda.merlin.NetworkStatus;
 import com.novoda.merlin.receiver.ConnectivityReceiver;
@@ -101,7 +102,7 @@ public class MerlinService extends Service implements HostPinger.PingerCallback 
     }
 
     private void getCurrentNetworkStatus() {
-        currentNetworkStatusRetriever.fetchWithPing();
+        currentNetworkStatusRetriever.fetchWithPing(Merlin.DEFAULT_ENDPOINT);
     }
 
     @Override
