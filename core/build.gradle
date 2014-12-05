@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'bintray-release'
+apply plugin: "sonar-runner"
 
 dependencies {
     compile 'com.android.support:support-v4:19.1.0'
@@ -10,10 +11,10 @@ android {
         minSdkVersion 14
         targetSdkVersion 19
     }
-
     compileSdkVersion 19
     buildToolsVersion "21.1.0"
 }
+
 
 publish {
     userOrg = 'novoda'
@@ -24,4 +25,30 @@ publish {
     uploadName = 'merlin'
     description = 'Observes network connection status & gives callbacks'
     website = 'https://github.com/novoda/merlin'
+}
+
+sonarRunner {
+    toolVersion = '2.4'
+
+    sonarProperties {
+		property "sonar.projectBaseDir", project.rootDir
+    
+        properties["sonar.sources"] = android.sourceSets.main.java.srcDirs
+		property "sonar.tests", "unit-tests/src/test/java"
+
+        property "sonar.binaries", file("${project.buildDir}/intermediates/classes/debug")
+
+		property "sonar.dynamicAnalysis", "reuseReports"
+
+		property "sonar.junit.reportsPath", "unit-tests/build/test-results"
+		property 'sonar.jacoco.reportPath', "unit-tests/build/jacoco/test.exec"
+
+        property "sonar.host.url", "http://sonar.novoda.com"
+        property "sonar.jdbc.url", "jdbc:mysql://192.168.1.11:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance"
+        
+        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
+        property "sonar.jdbc.username", "sonar"
+        property "sonar.jdbc.password", "sonar"
+
+    }
 }
