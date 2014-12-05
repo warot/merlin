@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'jacoco'
 
 repositories {
     mavenCentral()
@@ -21,6 +22,10 @@ private def readSdkDirFromLocalProperties() {
     catch (Exception e) {
         project.getLogger().debug("could not read local.properties", e)
     }
+}
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
 }
 
 dependencies {
