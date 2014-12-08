@@ -10,7 +10,42 @@ allprojects {
 buildscript {
     repositories { jcenter() }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.0'
+        classpath 'com.android.tools.build:gradle:1.0.0'
         classpath 'com.novoda:bintray-release:0.2.4'
+    }
+}
+
+apply plugin: "sonar-runner"
+
+sonarRunner {
+    toolVersion = '2.4'
+
+    sonarProperties {
+        property "sonar.host.url", "http://sonar.novoda.com"
+        property "sonar.jdbc.url", "jdbc:mysql://192.168.1.11:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance"
+
+        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
+        property "sonar.jdbc.username", "username"
+        property "sonar.jdbc.password", "password"
+    }
+}
+
+project(":core") {
+    sonarRunner {
+        sonarProperties {
+            property "sonar.sources", project.android.sourceSets.main.java.srcDirs
+            property "sonar.binaries", "$project.buildDir/intermediates/classes/debug"
+        }
+    }
+}
+
+project(":unit-tests") {
+    sonarRunner {
+        sonarProperties {
+            def projectUnderTest = rootProject.childProjects['core']
+
+            property "sonar.binaries", "$projectUnderTest.buildDir/intermediates/classes/debug"
+            property 'sonar.jacoco.reportPath', "$project.buildDir/jacoco/test.exec"
+        }
     }
 }
