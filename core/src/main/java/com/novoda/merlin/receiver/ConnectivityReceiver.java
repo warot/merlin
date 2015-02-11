@@ -4,13 +4,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.IBinder;
 
+import com.novoda.merlin.Merlin;
 import com.novoda.merlin.receiver.event.ConnectionEventPackager;
 import com.novoda.merlin.receiver.event.ConnectivityChangeEvent;
 import com.novoda.merlin.service.MerlinService;
 
 public class ConnectivityReceiver extends BroadcastReceiver {
+
+    private static boolean isAvailable(Object object) {
+        return object != null;
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -21,7 +27,10 @@ public class ConnectivityReceiver extends BroadcastReceiver {
     }
 
     private boolean connectivityAction(Intent intent) {
-        return ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction());
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            return ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction());
+
+        return Merlin.CONNECTIVITY_ACTION.equals(intent.getAction());
     }
 
     private void notifyMerlinService(Context context, ConnectivityChangeEvent connectivityChangedEvent) {
@@ -29,10 +38,6 @@ public class ConnectivityReceiver extends BroadcastReceiver {
         if (isAvailable(merlinService)) {
             merlinService.onConnectivityChanged(connectivityChangedEvent);
         }
-    }
-
-    private static boolean isAvailable(Object object) {
-        return object != null;
     }
 
     protected MerlinService getMerlinService(Context context) {

@@ -9,6 +9,7 @@ import com.novoda.merlin.service.MerlinServiceBinder;
 public class Merlin {
 
     public static final String DEFAULT_ENDPOINT = "http://www.android.com";
+    public static final String CONNECTIVITY_ACTION = "com.novoda.merlin.CONNECTIVITY_CHANGE";
 
     private final MerlinServiceBinder merlinServiceBinder;
     private final Registerer registerer;
